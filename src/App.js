@@ -1,23 +1,21 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Dropdown from "./components/Dropdown.component";
 import Column from "./components/Column.component";
 
 function App() {
   const [planets, setPlanets] = useState([]);
-
-  const [vehicles, setVehicles] = useState([]);
   const [token, setToken] = useState();
-
-  const getPlanets = async () => {
-    const data = await axios.get("https://findfalcone.geektrust.com/planets");
-    setPlanets(data.data);
-  };
+  const [vehicles, setVehicles] = useState([]);
 
   const getVehicles = async () => {
     const data = await axios.get("https://findfalcone.geektrust.com/vehicles");
     setVehicles(data.data);
+  };
+
+  const getPlanets = async () => {
+    const data = await axios.get("https://findfalcone.geektrust.com/planets");
+    setPlanets(data.data);
   };
 
   const findingFalcon = async () => {
@@ -31,11 +29,9 @@ function App() {
 
   useEffect(() => {
     getPlanets();
-    getVehicles();
     findingFalcon();
+    getVehicles();
   }, []);
-
-  console.log(vehicles)
 
   return (
     <div className="App">
@@ -49,15 +45,26 @@ function App() {
           setList={setVehicles}
         />
         <Column
-          display={"Destination 1"}
+          display={"Destination 2"}
           options={planets}
           setOptions={setPlanets}
           list={vehicles}
           setList={setVehicles}
         />
-        {/* <Dropdown display={"Destination 2"} options={planet} setOptions = {setPlanet}/> */}
-        {/* <Dropdown display={"Destination 3"} options={planet} setOptions = {setPlanet}/> */}
-        {/* <Dropdown display={"Destination 4"} options={planet} setOptions = {setPlanet}/> */}
+        <Column
+          display={"Destination 3"}
+          options={planets}
+          setOptions={setPlanets}
+          list={vehicles}
+          setList={setVehicles}
+        />
+        <Column
+          display={"Destination 4"}
+          options={planets}
+          setOptions={setPlanets}
+          list={vehicles}
+          setList={setVehicles}
+        />
       </div>
     </div>
   );

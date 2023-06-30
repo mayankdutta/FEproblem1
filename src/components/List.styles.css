@@ -1,0 +1,23 @@
+
+/* .options { */
+/*   display: flex; */
+/*   flex-flow: column; */
+/* } */
+
+/* .option { */
+/*   text-align: start; */
+/* } */
+
+/* .option-header { */
+/*   cursor: pointer; */
+/*   border: 2px solid black; */
+/* } */
+
+/* .option-value { */
+/*   cursor: pointer; */
+/*   border: 2px solid black; */
+/* } */
+
+.hidden {
+  color: gray;
+}

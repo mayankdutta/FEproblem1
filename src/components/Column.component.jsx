@@ -5,7 +5,7 @@ const Column = ({ display, options, setOptions, list, setList }) => {
   return (
     <div>
       <Dropdown display={display} options={options} setOptions={setOptions} />
-      <List listName ={display} list={list} setList={setList} />
+      <List display={display} list={list} setList={setList} />
     </div>
   );
 };
