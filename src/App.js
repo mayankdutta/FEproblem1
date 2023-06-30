@@ -35,7 +35,8 @@ function App() {
 
   return (
     <div className="App">
-      Main menu
+      <h1>Finding Felcon</h1>
+    <h3>Select planet you want to search in: </h3>
       <div className="dropdowns">
         <Column
           display={"Destination 1"}
