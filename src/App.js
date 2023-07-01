@@ -8,6 +8,22 @@ function App() {
   const [token, setToken] = useState();
   const [vehicles, setVehicles] = useState([]);
 
+  const [displayMap, setDisplayMap] = useState(
+    new Map([
+      ["Destination 1", "Select ..."],
+      ["Destination 2", "Select ..."],
+      ["Destination 3", "Select ..."],
+      ["Destination 4", "Select ..."],
+    ])
+  );
+
+  const Destinations = [
+    "Destination 1",
+    "Destination 2",
+    "Destination 3",
+    "Destination 4",
+  ];
+
   const getVehicles = async () => {
     const data = await axios.get("https://findfalcone.geektrust.com/vehicles");
     setVehicles(data.data);
@@ -33,39 +49,26 @@ function App() {
     getVehicles();
   }, []);
 
+  // console.log("planets: ", planets);
+  // console.log("vehicles: ", vehicles);
+
   return (
     <div className="App">
-      <h1>Finding Felcon</h1>
-    <h3>Select planet you want to search in: </h3>
+      <h1>Finding a falcon</h1>
+      <h4>Select a planet you want to search</h4>
       <div className="dropdowns">
-        <Column
-          display={"Destination 1"}
-          options={planets}
-          setOptions={setPlanets}
-          list={vehicles}
-          setList={setVehicles}
-        />
-        <Column
-          display={"Destination 2"}
-          options={planets}
-          setOptions={setPlanets}
-          list={vehicles}
-          setList={setVehicles}
-        />
-        <Column
-          display={"Destination 3"}
-          options={planets}
-          setOptions={setPlanets}
-          list={vehicles}
-          setList={setVehicles}
-        />
-        <Column
-          display={"Destination 4"}
-          options={planets}
-          setOptions={setPlanets}
-          list={vehicles}
-          setList={setVehicles}
-        />
+        {Destinations.map((destination) => (
+          <Column
+            key={destination}
+            display={destination}
+            options={planets}
+            setOptions={setPlanets}
+            list={vehicles}
+            setList={setVehicles}
+            displayMap={displayMap}
+            setDisplayMap={setDisplayMap}
+          />
+        ))}
       </div>
     </div>
   );

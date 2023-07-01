@@ -1,23 +1,20 @@
 import { useState } from "react";
 import "./Dropdown.styles.css";
 
-const Dropdown = ({ display, options, setOptions }) => {
+const Dropdown = ({
+  display,
+  options,
+  setOptions,
+  displayMap,
+  setDisplayMap,
+}) => {
   const [visible, setVisible] = useState(false);
-  const [value, setValue] = useState("Select ...");
 
   const handleClick = (option) => {
-    let newOptions = [];
-    for (let i of options) {
-      if (i.name === option.name) {
-        newOptions.push({ ...i, hidden: true });
-      } else {
-        newOptions.push({ ...i, hidden: i.hidden || false });
-      }
-    }
+    let newOptionValue = new Map(displayMap);
+    newOptionValue.set(display, option.name);
 
-    setOptions(newOptions);
-
-    setValue(option.name);
+    setDisplayMap(newOptionValue);
     setVisible(!visible);
   };
 
@@ -30,16 +27,21 @@ const Dropdown = ({ display, options, setOptions }) => {
       <div className={"options"}>
         <h3>{display}</h3>
         <div className="option-header" onClick={() => handleVisible()}>
-          {value}
+          {displayMap.get(display)}
         </div>
+
         <div className="option-value">
           {visible &&
             options?.map((option) => {
-              return option.hidden && option.hidden === true ? (
-                <div
-                  key={option.name}
-                  className={"option hidden"}
-                >
+              let found = false;
+              Array.from(displayMap.keys()).map(function (currentDisplay) {
+                if (displayMap.get(currentDisplay) === option.name) {
+                  found = true;
+                }
+              });
+
+              return found ? (
+                <div key={option.name} className={"option hidden"}>
                   {option.name}
                 </div>
               ) : (

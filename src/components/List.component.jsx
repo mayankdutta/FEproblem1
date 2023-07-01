@@ -1,11 +1,11 @@
 import { useState } from "react";
 import "./List.styles.css";
 
-const List = ({ list, setList, display }) => {
+const List = ({ list, setList, display, optionValue }) => {
   const [checked, setChecked] = useState([]);
 
   const handleClick = (name) => {
-    let newList = [...list];
+    let newList = list.map((l) => ({ ...l, display: l.display || display }));
 
     if (checked.length == 0) {
       for (let i of newList) {
@@ -15,31 +15,27 @@ const List = ({ list, setList, display }) => {
       }
     } else {
       for (let i of newList) {
-        if (i.name === checked) {
+        if (i.name === checked.name && i.display === checked.display) {
           i.total_no += 1;
         }
-        if (i.name === name) {
+        if (i.name === name && i.display === display) {
           i.total_no -= 1;
         }
       }
     }
 
-    setChecked(name);
+    setChecked({ name: name, display: display });
     setList(newList);
   };
+
 
   return (
     <div>
       {list?.map((val) => {
         const uniqueID = display + val.name;
-        console.log(
-          "debugging: ",
-          checked[checked.length - 1] === val.name ? 1 : 0
-        );
-        console.log("checked array: ", checked);
-        return val.total_no === 0 ? (
+        return val.max_distance < optionValue.distance || val.total_no === 0 ? (
           <div key={uniqueID}>
-            <input type="radio" name={display} id={uniqueID} />
+            <input type="radio" name={display} id={uniqueID} disabled />
             <label htmlFor={uniqueID} className="hidden">
               {val.name + " ( "}{" "}
               {val.total_no -
