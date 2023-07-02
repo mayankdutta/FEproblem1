@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./List.styles.css";
 
-const List = ({ list, setList, display, optionValue }) => {
+const List = ({ list, setList, display, optionValue, displayMap, setDisplayMap }) => {
   const [checked, setChecked] = useState([]);
 
   const handleClick = (name) => {
@@ -33,7 +33,7 @@ const List = ({ list, setList, display, optionValue }) => {
     <div>
       {list?.map((val) => {
         const uniqueID = display + val.name;
-        return val.max_distance < optionValue.distance || val.total_no === 0 ? (
+        return val.max_distance < displayMap.get(display)[1] || val.total_no === 0 ? (
           <div key={uniqueID}>
             <input type="radio" name={display} id={uniqueID} disabled />
             <label htmlFor={uniqueID} className="hidden">

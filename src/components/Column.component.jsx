@@ -25,6 +25,9 @@ const Column = ({
         list={list}
         setList={setList}
         optionValue={displayMap}
+
+        displayMap={displayMap}
+        setDisplayMap={setDisplayMap}
       />
     </div>
   );

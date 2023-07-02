@@ -12,7 +12,7 @@ const Dropdown = ({
 
   const handleClick = (option) => {
     let newOptionValue = new Map(displayMap);
-    newOptionValue.set(display, option.name);
+    newOptionValue.set(display, Object.values(option));
 
     setDisplayMap(newOptionValue);
     setVisible(!visible);
@@ -27,7 +27,7 @@ const Dropdown = ({
       <div className={"options"}>
         <h3>{display}</h3>
         <div className="option-header" onClick={() => handleVisible()}>
-          {displayMap.get(display)}
+          {displayMap.get(display)[0]}
         </div>
 
         <div className="option-value">
@@ -35,7 +35,7 @@ const Dropdown = ({
             options?.map((option) => {
               let found = false;
               Array.from(displayMap.keys()).map(function (currentDisplay) {
-                if (displayMap.get(currentDisplay) === option.name) {
+                if (displayMap.get(currentDisplay)[0] === option.name) {
                   found = true;
                 }
               });
