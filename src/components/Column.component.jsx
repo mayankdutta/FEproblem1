@@ -1,34 +1,11 @@
 import Dropdown from "./Dropdown.component";
 import List from "./List.component";
 
-const Column = ({
-  display,
-  options,
-  setOptions,
-  list,
-  setList,
-  displayMap,
-  setDisplayMap,
-}) => {
+const Column = ({ display }) => {
   return (
     <div>
-      <Dropdown
-        display={display}
-        options={options}
-        setOptions={setOptions}
-        displayMap={displayMap}
-        setDisplayMap={setDisplayMap}
-      />
-
-      <List
-        display={display}
-        list={list}
-        setList={setList}
-        optionValue={displayMap}
-
-        displayMap={displayMap}
-        setDisplayMap={setDisplayMap}
-      />
+      <Dropdown display={display} />
+      <List display={display} />
     </div>
   );
 };

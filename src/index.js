@@ -2,11 +2,17 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
+import { PlanetProvider } from "./contexts/planet.context";
+import { VehicleProvider } from "./contexts/vehicle.context";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <>
-    <App />
+    <PlanetProvider>
+      <VehicleProvider>
+        <App />
+      </VehicleProvider>
+    </PlanetProvider>
   </>
 );
 

@@ -1,14 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { PlanetContext } from "../contexts/planet.context";
 import "./Dropdown.styles.css";
 
-const Dropdown = ({
-  display,
-  options,
-  setOptions,
-  displayMap,
-  setDisplayMap,
-}) => {
+const Dropdown = ({ display }) => {
   const [visible, setVisible] = useState(false);
+  const { planets, displayMap, setDisplayMap } = useContext(PlanetContext);
 
   const handleClick = (option) => {
     let newOptionValue = new Map(displayMap);
@@ -32,7 +28,7 @@ const Dropdown = ({
 
         <div className="option-value">
           {visible &&
-            options?.map((option) => {
+            planets?.map((option) => {
               let found = false;
               Array.from(displayMap.keys()).map(function (currentDisplay) {
                 if (displayMap.get(currentDisplay)[0] === option.name) {

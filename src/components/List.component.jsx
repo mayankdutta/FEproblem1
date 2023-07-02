@@ -1,11 +1,19 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { PlanetContext } from "../contexts/planet.context";
+import { VehicleContext } from "../contexts/vehicle.context";
 import "./List.styles.css";
 
-const List = ({ list, setList, display, optionValue, displayMap, setDisplayMap }) => {
+const List = ({ display }) => {
   const [checked, setChecked] = useState([]);
 
+  const { displayMap } = useContext(PlanetContext);
+  const { vehicles, setVehicles } = useContext(VehicleContext);
+
   const handleClick = (name) => {
-    let newList = list.map((l) => ({ ...l, display: l.display || display }));
+    let newList = vehicles.map((l) => ({
+      ...l,
+      display: l.display || display,
+    }));
 
     if (checked.length == 0) {
       for (let i of newList) {
@@ -25,15 +33,15 @@ const List = ({ list, setList, display, optionValue, displayMap, setDisplayMap }
     }
 
     setChecked({ name: name, display: display });
-    setList(newList);
+    setVehicles(newList);
   };
-
 
   return (
     <div>
-      {list?.map((val) => {
+      {vehicles?.map((val) => {
         const uniqueID = display + val.name;
-        return val.max_distance < displayMap.get(display)[1] || val.total_no === 0 ? (
+        return val.max_distance < displayMap.get(display)[1] ||
+          val.total_no === 0 ? (
           <div key={uniqueID}>
             <input type="radio" name={display} id={uniqueID} disabled />
             <label htmlFor={uniqueID} className="hidden">
