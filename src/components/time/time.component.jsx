@@ -1,15 +1,15 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { VehicleContext } from "../../contexts/vehicle.context";
 
 const Time = () => {
-  const { vehicles } = useContext(VehicleContext);
-  const [timeTaken, setTimeTaken] = useState(0);
+  const { totalTime, vehicles } = useContext(VehicleContext);
 
-  console.log('vehicles: ', vehicles);
+  console.log("vehicles: ", vehicles);
+
   return (
     <>
       <div>Time taken</div>
-      <div>{timeTaken}</div>
+      <div>{totalTime}</div>
     </>
   );
 };

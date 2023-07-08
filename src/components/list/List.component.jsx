@@ -7,9 +7,11 @@ const List = ({ display }) => {
   const [checked, setChecked] = useState([]);
 
   const { displayMap } = useContext(PlanetContext);
-  const { vehicles, setVehicles } = useContext(VehicleContext);
+  const { vehicles, setVehicles, totalTime, setTimeTaken } =
+    useContext(VehicleContext);
 
   const handleClick = (name) => {
+    let newTotalTime = totalTime;
     let newList = vehicles.map((l) => ({
       ...l,
       display: display,
@@ -19,21 +21,25 @@ const List = ({ display }) => {
       for (let i of newList) {
         if (i.name === name) {
           i.total_no -= 1;
+          newTotalTime += i.max_distance / i.speed;
         }
       }
     } else {
       for (let i of newList) {
         if (i.name === checked.name && i.display === checked.display) {
           i.total_no += 1;
+          newTotalTime -= i.max_distance / i.speed;
         }
         if (i.name === name && i.display === display) {
           i.total_no -= 1;
+          newTotalTime += i.max_distance / i.speed;
         }
       }
     }
 
     setChecked({ name: name, display: display });
     setVehicles(newList);
+    setTimeTaken(newTotalTime);
   };
 
   return (

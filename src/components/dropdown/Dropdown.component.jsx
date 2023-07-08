@@ -8,7 +8,6 @@ const Dropdown = ({ display }) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleClick = (option) => {
-    console.log("choosen option: ", option);
     let newOptionValue = new Map(displayMap);
     newOptionValue.set(display, Object.values(option));
 

@@ -22,14 +22,12 @@ export const PlanetProvider = ({ children }) => {
   useEffect(() => {
     const getPlanets = async () => {
       const data = await axios.get("https://findfalcone.geektrust.com/planets");
-      console.log(data.data);
       setPlanets(data.data);
     };
 
     getPlanets();
   }, []);
 
-  console.log("debugging map:", displayMap);
 
   const value = { planets, setPlanets, displayMap, setDisplayMap };
 
