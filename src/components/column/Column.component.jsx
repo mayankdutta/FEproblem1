@@ -1,5 +1,5 @@
-import Dropdown from "./Dropdown.component";
-import List from "./List.component";
+import Dropdown from "../dropdown/Dropdown.component";
+import List from "../list/List.component";
 
 const Column = ({ display }) => {
   return (

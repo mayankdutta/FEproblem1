@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { PlanetContext } from "../contexts/planet.context";
+import { PlanetContext } from "../../contexts/planet.context";
 import "./Dropdown.styles.css";
 
 const Dropdown = ({ display }) => {

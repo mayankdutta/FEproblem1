@@ -1,7 +1,9 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Column from "./components/Column.component";
+import Column from "./components/column/Column.component";
+import Navbar from "./components/navbar/navbar.component";
+import Time from "./components/time/time.component";
 
 function App() {
   const [token, setToken] = useState();
@@ -27,15 +29,19 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <h1>Finding a falcon</h1>
-      <h4>Select a planet you want to search</h4>
-      <div className="dropdowns">
-        {Destinations.map((destination) => (
-          <Column key={destination} display={destination} />
-        ))}
+    <>
+      <Navbar />
+      <div className="App">
+        <h1>Finding a falcon</h1>
+        <h4>Select a planet you want to search</h4>
+        <div className="dropdowns">
+          {Destinations.map((destination) => (
+            <Column key={destination} display={destination} />
+          ))}
+        </div>
+    <Time />
       </div>
-    </div>
+    </>
   );
 }
 
