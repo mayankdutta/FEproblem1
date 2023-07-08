@@ -5,30 +5,54 @@ import "./Dropdown.styles.css";
 const Dropdown = ({ display }) => {
   const [visible, setVisible] = useState(false);
   const { planets, displayMap, setDisplayMap } = useContext(PlanetContext);
+  const [inputValue, setInputValue] = useState("");
 
   const handleClick = (option) => {
+    console.log("choosen option: ", option);
     let newOptionValue = new Map(displayMap);
     newOptionValue.set(display, Object.values(option));
 
     setDisplayMap(newOptionValue);
     setVisible(!visible);
+    setInputValue("");
   };
 
-  const handleVisible = () => {
-    setVisible(!visible);
+  const handleReset = () => {
+    let newOptionValue = new Map(displayMap);
+    newOptionValue.set(display, ["Select ..."]);
+
+    setDisplayMap(newOptionValue);
+  };
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  const getInputList = () => {
+    return planets.filter((planet) =>
+      planet.name.toLowerCase().includes(inputValue.toLowerCase())
+    );
   };
 
   return (
     <>
       <div className={"options"}>
         <h3>{display}</h3>
-        <div className="option-header" onClick={() => handleVisible()}>
-          {displayMap.get(display)[0]}
-        </div>
+        <span>
+          <input
+            placeholder={displayMap.get(display)[0]}
+            type="text"
+            value={inputValue}
+            onChange={handleInputChange}
+            onFocus={() => setVisible(true)}
+            onBlur={() => setVisible(false)}
+          />
+          <button onClick={handleReset}>X</button>
+        </span>
 
         <div className="option-value">
           {visible &&
-            planets?.map((option) => {
+            getInputList().map((option) => {
               let found = false;
               Array.from(displayMap.keys()).map(function (currentDisplay) {
                 if (displayMap.get(currentDisplay)[0] === option.name) {
@@ -36,19 +60,25 @@ const Dropdown = ({ display }) => {
                 }
               });
 
-              return found ? (
-                <div key={option.name} className={"option hidden"}>
-                  {option.name}
-                </div>
-              ) : (
-                <div
-                  key={option.name}
-                  className={"option"}
-                  onClick={() => handleClick(option)}
-                >
-                  {option.name}
-                </div>
-              );
+              if (found) {
+                return (
+                  <div key={option.name} className={"option hidden"}>
+                    {option.name}
+                  </div>
+                );
+              } else {
+                return (
+                  <div
+                    key={option.name}
+                    className={"option"}
+                    onMouseDown={() => {
+                      handleClick(option);
+                    }}
+                  >
+                    {option.name}
+                  </div>
+                );
+              }
             })}
         </div>
       </div>

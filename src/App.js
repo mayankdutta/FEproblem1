@@ -26,9 +26,6 @@ function App() {
     findingFalcon();
   }, []);
 
-  // console.log("planets: ", planets);
-  // console.log("vehicles: ", vehicles);
-
   return (
     <div className="App">
       <h1>Finding a falcon</h1>
