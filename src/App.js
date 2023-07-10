@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 
 import Column from "./components/column/Column.component";
@@ -6,9 +6,15 @@ import Navbar from "./components/navbar/navbar.component";
 import Time from "./components/time/time.component";
 
 import "./App.css";
+import { VehicleContext } from "./contexts/vehicle.context";
+import Result from "./components/result/result.component";
 
 function App() {
   const [token, setToken] = useState();
+
+  const { canCheckResult } = useContext(VehicleContext);
+
+  const handleReset = () => window.location.reload(true);
 
   const Destinations = [
     "Destination 1",
@@ -23,6 +29,7 @@ function App() {
       {},
       { headers: { Accept: "application/json" } }
     );
+
     setToken(data.data.token);
   };
 
@@ -35,13 +42,22 @@ function App() {
       <Navbar />
       <div className="App">
         <h1>Finding a falcon</h1>
-        <h4>Select a planet you want to search</h4>
-        <div className="dropdowns">
-          {Destinations.map((destination) => (
-            <Column key={destination} display={destination} />
-          ))}
-        </div>
+
+        {canCheckResult ? (
+          <>{canCheckResult && <Result token={token} />}</>
+        ) : (
+          <>
+            <h4>Select a planet you want to search</h4>
+            <div className="dropdowns">
+              {Destinations.map((destination) => (
+                <Column key={destination} display={destination} />
+              ))}
+            </div>
+          </>
+        )}
+
         <Time />
+        {canCheckResult && <button onClick={handleReset}>Start Again</button>}
       </div>
     </>
   );

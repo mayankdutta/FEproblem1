@@ -2,16 +2,21 @@ import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
 export const VehicleContext = createContext({
+  canCheckResult: false,
   totalTime: 0,
-  setTotalTime: () => null,
+  selectedVehicle: null,
 
-  vehicles: null,
-  setVehicles: () => null,
+  setCanCheckResult: () => null,
+  setTotalTime: () => null,
+  setSelectedVehicle: () => null,
 });
 
 export const VehicleProvider = ({ children }) => {
   const [vehicles, setVehicles] = useState([]);
   const [totalTime, setTimeTaken] = useState(0);
+
+  const [selectedVehicle, setSelectedVehicle] = useState(new Map());
+  const [canCheckResult, setCanCheckResult] = useState(false);
 
   useEffect(() => {
     const getVehicles = async () => {
@@ -24,7 +29,21 @@ export const VehicleProvider = ({ children }) => {
     getVehicles();
   }, []);
 
-  const value = { vehicles, setVehicles, totalTime, setTimeTaken };
+  useEffect(() => {
+    setCanCheckResult(selectedVehicle.size == 4);
+  }, [selectedVehicle]);
+
+  const value = {
+    vehicles,
+    totalTime,
+    selectedVehicle,
+    canCheckResult,
+
+    setTimeTaken,
+    setVehicles,
+    setSelectedVehicle,
+    setCanCheckResult,
+  };
 
   return (
     <VehicleContext.Provider value={value}>{children}</VehicleContext.Provider>

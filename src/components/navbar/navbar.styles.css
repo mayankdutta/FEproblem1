@@ -8,7 +8,13 @@
   display: flex;
   border: 2px solid black;
   flex-direction: row-reverse;
-  justify-content: space-around;
+  justify-content: space-evenly;
+}
+
+.navitem {
+  margin-left: 8px;
+  margin-right: 8px;
+  cursor: pointer;
 }
 
 @media (min-width: 1250px) {

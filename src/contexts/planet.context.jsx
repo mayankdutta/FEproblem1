@@ -1,22 +1,19 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
+import { defaultPlanetValues } from "../defaultValues";
 
 export const PlanetContext = createContext({
   planets: null,
+  selectedPlanets: null,
+
   setPlanets: () => null,
-  displayMap: null,
-  setDisplayMap: () => null,
+  setSelectedPlanets: () => null,
 });
 
 export const PlanetProvider = ({ children }) => {
   const [planets, setPlanets] = useState(null);
-  const [displayMap, setDisplayMap] = useState(
-    new Map([
-      ["Destination 1", ["Select ..."]],
-      ["Destination 2", ["Select ..."]],
-      ["Destination 3", ["Select ..."]],
-      ["Destination 4", ["Select ..."]],
-    ])
+  const [selectedPlanets, setSelectedPlanets] = useState(
+    new Map(defaultPlanetValues)
   );
 
   useEffect(() => {
@@ -29,7 +26,7 @@ export const PlanetProvider = ({ children }) => {
   }, []);
 
 
-  const value = { planets, setPlanets, displayMap, setDisplayMap };
+  const value = { planets, setPlanets, selectedPlanets, setSelectedPlanets};
 
   return (
     <PlanetContext.Provider value={value}>{children}</PlanetContext.Provider>

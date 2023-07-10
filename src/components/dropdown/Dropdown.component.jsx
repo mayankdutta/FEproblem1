@@ -4,11 +4,15 @@ import "./Dropdown.styles.css";
 
 const Dropdown = ({ display }) => {
   const [visible, setVisible] = useState(false);
-  const { planets, displayMap, setDisplayMap } = useContext(PlanetContext);
+  const {
+    planets,
+    selectedPlanets,
+    setSelectedPlanets: setDisplayMap,
+  } = useContext(PlanetContext);
   const [inputValue, setInputValue] = useState("");
 
   const handleClick = (option) => {
-    let newOptionValue = new Map(displayMap);
+    let newOptionValue = new Map(selectedPlanets);
     newOptionValue.set(display, Object.values(option));
 
     setDisplayMap(newOptionValue);
@@ -17,7 +21,7 @@ const Dropdown = ({ display }) => {
   };
 
   const handleReset = () => {
-    let newOptionValue = new Map(displayMap);
+    let newOptionValue = new Map(selectedPlanets);
     newOptionValue.set(display, ["Select ..."]);
 
     setDisplayMap(newOptionValue);
@@ -33,13 +37,15 @@ const Dropdown = ({ display }) => {
     );
   };
 
+  console.log(selectedPlanets);
+
   return (
     <>
       <div className={"options"}>
         <h3>{display}</h3>
         <span>
           <input
-            placeholder={displayMap.get(display)[0]}
+            placeholder={selectedPlanets.get(display)[0]}
             type="text"
             value={inputValue}
             onChange={handleInputChange}
@@ -53,8 +59,8 @@ const Dropdown = ({ display }) => {
           {visible &&
             getInputList().map((option) => {
               let found = false;
-              Array.from(displayMap.keys()).map(function (currentDisplay) {
-                if (displayMap.get(currentDisplay)[0] === option.name) {
+              Array.from(selectedPlanets.keys()).map(function (currentDisplay) {
+                if (selectedPlanets.get(currentDisplay)[0] === option.name) {
                   found = true;
                 }
               });
