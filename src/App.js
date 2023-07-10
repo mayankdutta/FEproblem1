@@ -1,9 +1,11 @@
-import "./App.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
+
 import Column from "./components/column/Column.component";
 import Navbar from "./components/navbar/navbar.component";
 import Time from "./components/time/time.component";
+
+import "./App.css";
 
 function App() {
   const [token, setToken] = useState();
@@ -39,7 +41,7 @@ function App() {
             <Column key={destination} display={destination} />
           ))}
         </div>
-    <Time />
+        <Time />
       </div>
     </>
   );
