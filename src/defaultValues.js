@@ -1,11 +1,11 @@
-export const defaultPlanetValues = [
+export const DEFAULT_PLANET_VALUES = [
   ["Destination 1", ["Select ..."]],
   ["Destination 2", ["Select ..."]],
   ["Destination 3", ["Select ..."]],
   ["Destination 4", ["Select ..."]],
 ];
 
-export const Destinations = [
+export const DESTINATIONS = [
   "Destination 1",
   "Destination 2",
   "Destination 3",

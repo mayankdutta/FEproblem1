@@ -7,14 +7,19 @@ import Navbar from "./components/navbar/navbar.component";
 import Time from "./components/time/time.component";
 import Result from "./components/result/result.component";
 
-import { Destinations } from "./defaultValues";
+import { DESTINATIONS } from "./defaultValues";
 import { VehicleContext } from "./contexts/vehicle.context";
 import Footer from "./components/footer/footer.component";
+import { PlanetContext } from "./contexts/planet.context";
 
 function App() {
-  const { canCheckResult } = useContext(VehicleContext);
+  const { canCheckResult, vehicleReset } = useContext(VehicleContext);
+  const { planetReset } = useContext(PlanetContext);
 
-  const handleReset = () => window.location.reload(true);
+  const handleReset = () => {
+    vehicleReset();
+    planetReset();
+  };
 
   return (
     <>
@@ -27,7 +32,7 @@ function App() {
           <>
             <h4>Select a planet you want to search</h4>
             <div className="dropdowns">
-              {Destinations.map((destination) => (
+              {DESTINATIONS.map((destination) => (
                 <Column key={destination} display={destination} />
               ))}
             </div>

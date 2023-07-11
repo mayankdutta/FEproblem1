@@ -20,6 +20,12 @@ export const VehicleProvider = ({ children }) => {
   const [selectedVehicle, setSelectedVehicle] = useState(new Map());
   const [canCheckResult, setCanCheckResult] = useState(false);
 
+  const vehicleReset = () => {
+    setTimeTaken(0);
+    setSelectedVehicle(new Map());
+    setCanCheckResult(false);
+  }
+
   useEffect(() => {
     const getVehicles = async () => {
       const data = await axios.get(VEHICLES_URI);
@@ -43,6 +49,8 @@ export const VehicleProvider = ({ children }) => {
     setVehicles,
     setSelectedVehicle,
     setCanCheckResult,
+
+    vehicleReset
   };
 
   return (
