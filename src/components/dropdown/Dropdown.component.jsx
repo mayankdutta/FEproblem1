@@ -1,37 +1,33 @@
-import { useContext, useState } from "react";
-import { PlanetContext } from "../../contexts/planet.context";
 import "./Dropdown.styles.css";
 
+import { useContext, useState } from "react";
+import { PlanetContext } from "../../contexts/planet.context";
+
 const Dropdown = ({ display }) => {
+  const { planets, selectedPlanets, setSelectedPlanets } =
+    useContext(PlanetContext);
+
   const [visible, setVisible] = useState(false);
-  const {
-    planets,
-    selectedPlanets,
-    setSelectedPlanets: setDisplayMap,
-  } = useContext(PlanetContext);
   const [inputValue, setInputValue] = useState("");
 
   const handleClick = (option) => {
     let newOptionValue = new Map(selectedPlanets);
     newOptionValue.set(display, Object.values(option));
 
-    setDisplayMap(newOptionValue);
+    setSelectedPlanets(newOptionValue);
     setVisible(!visible);
     setInputValue("");
   };
 
   const handleReset = () => {
-    let newOptionValue = new Map(selectedPlanets);
-    newOptionValue.set(display, ["Select ..."]);
-
-    setDisplayMap(newOptionValue);
+    setSelectedPlanets(new Map(selectedPlanets).set(display, ["Select ..."]));
   };
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
 
-  const getInputList = () => {
+  const filteredList = () => {
     return planets.filter((planet) =>
       planet.name.toLowerCase().includes(inputValue.toLowerCase())
     );
@@ -57,33 +53,27 @@ const Dropdown = ({ display }) => {
 
         <div className="option-value">
           {visible &&
-            getInputList().map((option) => {
-              let found = false;
-              Array.from(selectedPlanets.keys()).map(function (currentDisplay) {
-                if (selectedPlanets.get(currentDisplay)[0] === option.name) {
-                  found = true;
-                }
-              });
+            filteredList().map((option) => {
+              let alreadyUsed = Array.from(selectedPlanets.keys()).find(
+                (selectedPlanet) =>
+                  selectedPlanets.get(selectedPlanet)[0] === option.name
+              );
 
-              if (found) {
-                return (
-                  <div key={option.name} className={"option hidden"}>
-                    {option.name}
-                  </div>
-                );
-              } else {
-                return (
-                  <div
-                    key={option.name}
-                    className={"option"}
-                    onMouseDown={() => {
-                      handleClick(option);
-                    }}
-                  >
-                    {option.name}
-                  </div>
-                );
-              }
+              return alreadyUsed ? (
+                <div key={option.name} className={"option hidden"}>
+                  {option.name}
+                </div>
+              ) : (
+                <div
+                  key={option.name}
+                  className={"option"}
+                  onMouseDown={() => {
+                    handleClick(option);
+                  }}
+                >
+                  {option.name}
+                </div>
+              );
             })}
         </div>
       </div>

@@ -1,6 +1,7 @@
-import { createContext, useState, useEffect } from "react";
 import axios from "axios";
-import { defaultPlanetValues } from "../defaultValues";
+
+import { createContext, useState, useEffect } from "react";
+import { PLANETS_URI, defaultPlanetValues } from "../defaultValues";
 
 export const PlanetContext = createContext({
   planets: null,
@@ -18,15 +19,14 @@ export const PlanetProvider = ({ children }) => {
 
   useEffect(() => {
     const getPlanets = async () => {
-      const data = await axios.get("https://findfalcone.geektrust.com/planets");
+      const data = await axios.get(PLANETS_URI);
       setPlanets(data.data);
     };
 
     getPlanets();
   }, []);
 
-
-  const value = { planets, setPlanets, selectedPlanets, setSelectedPlanets};
+  const value = { planets, setPlanets, selectedPlanets, setSelectedPlanets };
 
   return (
     <PlanetContext.Provider value={value}>{children}</PlanetContext.Provider>

@@ -4,3 +4,14 @@ export const defaultPlanetValues = [
   ["Destination 3", ["Select ..."]],
   ["Destination 4", ["Select ..."]],
 ];
+
+export const Destinations = [
+  "Destination 1",
+  "Destination 2",
+  "Destination 3",
+  "Destination 4",
+];
+
+export const TOKEN_URI = "https://findfalcone.geektrust.com/token";
+export const PLANETS_URI = "https://findfalcone.geektrust.com/planets";
+export const VEHICLES_URI = "https://findfalcone.geektrust.com/vehicles";

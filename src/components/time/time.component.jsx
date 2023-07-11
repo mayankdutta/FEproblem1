@@ -2,14 +2,11 @@ import { useContext } from "react";
 import { VehicleContext } from "../../contexts/vehicle.context";
 
 const Time = () => {
-  const { totalTime, vehicles } = useContext(VehicleContext);
-
-  console.log("vehicles: ", vehicles);
+  const { totalTime } = useContext(VehicleContext);
 
   return (
     <>
-      <div>Time taken</div>
-      <div>{totalTime}</div>
+      <div>Time taken: {totalTime}</div>
     </>
   );
 };

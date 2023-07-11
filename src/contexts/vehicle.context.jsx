@@ -1,5 +1,7 @@
-import { createContext, useState, useEffect } from "react";
 import axios from "axios";
+
+import { createContext, useState, useEffect } from "react";
+import { VEHICLES_URI } from "../defaultValues";
 
 export const VehicleContext = createContext({
   canCheckResult: false,
@@ -20,9 +22,7 @@ export const VehicleProvider = ({ children }) => {
 
   useEffect(() => {
     const getVehicles = async () => {
-      const data = await axios.get(
-        "https://findfalcone.geektrust.com/vehicles"
-      );
+      const data = await axios.get(VEHICLES_URI);
       setVehicles(data.data);
     };
 

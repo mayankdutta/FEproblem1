@@ -9,53 +9,51 @@ const List = ({ display }) => {
   const { selectedPlanets } = useContext(PlanetContext);
   const {
     selectedVehicle,
-    setSelectedVehicle,
     vehicles,
-    setVehicles,
     totalTime,
+
+    setSelectedVehicle,
+    setVehicles,
     setTimeTaken,
   } = useContext(VehicleContext);
-
-  console.log(selectedPlanets);
 
   const handleClick = (name) => {
     const PlanetDistance = selectedPlanets.get(display)[1];
 
     let newTotalTime = totalTime;
-    let newList = vehicles.map((l) => ({
+    let newVehicleList = vehicles.map((l) => ({
       ...l,
       display: display,
     }));
 
-    if (checked.length == 0) {
-      for (let i of newList) {
-        if (i.name === name) {
-          i.total_no -= 1;
-          newTotalTime += PlanetDistance / i.speed;
-        }
+    let isCheckedEmpty = checked.length == 0;
+
+    for (let i of newVehicleList) {
+      let firstTimeModification = isCheckedEmpty && i.name === name;
+
+      let modifyPrevState =
+        !isCheckedEmpty &&
+        i.name === checked.name &&
+        i.display === checked.display;
+
+      let modifyCurrState =
+        !isCheckedEmpty && i.name === name && i.display === display;
+
+      if (firstTimeModification || modifyCurrState) {
+        i.total_no -= 1;
+        newTotalTime += PlanetDistance / i.speed;
       }
-    } else {
-      for (let i of newList) {
-        if (i.name === checked.name && i.display === checked.display) {
-          i.total_no += 1;
-          newTotalTime -= PlanetDistance / i.speed;
-        }
-        if (i.name === name && i.display === display) {
-          i.total_no -= 1;
-          newTotalTime += PlanetDistance / i.speed;
-        }
+      if (modifyPrevState) {
+        i.total_no += 1;
+        newTotalTime -= PlanetDistance / i.speed;
       }
     }
 
-    let newSelectedVehicle = new Map(selectedVehicle);
-    newSelectedVehicle.set(display, name);
+    setSelectedVehicle(new Map(selectedVehicle).set(display, name));
 
     setChecked({ name: name, display: display });
-    setVehicles(newList);
+    setVehicles(newVehicleList);
     setTimeTaken(newTotalTime);
-    setSelectedVehicle(newSelectedVehicle);
-
-    console.log("new time: ", newTotalTime);
   };
 
   return (
@@ -63,30 +61,23 @@ const List = ({ display }) => {
       {selectedPlanets.get(display)[0] != "Select ..." &&
         vehicles?.map((val) => {
           const uniqueID = display + val.name;
+          let condition =
+            val.max_distance < selectedPlanets.get(display)[1] ||
+            val.total_no === 0;
 
-          return val.max_distance < selectedPlanets.get(display)[1] ||
-            val.total_no === 0 ? (
-            <div key={uniqueID}>
-              <input type="radio" name={display} id={uniqueID} disabled />
-              <label htmlFor={uniqueID} className="hidden">
-                {val.name + " ( "}{" "}
-                {val.total_no -
-                  (checked[checked.length - 1] === val.name ? 1 : 0)}{" "}
-                {" )"}
-              </label>
-            </div>
-          ) : (
+          return (
             <div key={uniqueID}>
               <input
                 type="radio"
                 name={display}
                 id={uniqueID}
                 onClick={() => {
-                  handleClick(val.name);
+                  if (!condition) handleClick(val.name);
                 }}
+                disabled={condition}
               />
 
-              <label htmlFor={uniqueID}>
+              <label htmlFor={uniqueID} className={condition ? "hidden" : ""}>
                 {val.name + " ( "}{" "}
                 {val.total_no -
                   (checked[checked.length - 1] === val.name ? 1 : 0)}{" "}

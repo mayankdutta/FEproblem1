@@ -1,12 +1,16 @@
-import { useContext, useEffect, useState } from "react";
-import { VehicleContext } from "../../contexts/vehicle.context";
-import { PlanetContext } from "../../contexts/planet.context";
-
 import axios from "axios";
 
-const Result = ({ token }) => {
+import { useContext, useEffect, useState } from "react";
+
+import { VehicleContext } from "../../contexts/vehicle.context";
+import { PlanetContext } from "../../contexts/planet.context";
+import { TokenContext } from "../../contexts/token.context";
+
+const Result = () => {
   const { selectedVehicle } = useContext(VehicleContext);
   const { selectedPlanets } = useContext(PlanetContext);
+  const { token } = useContext(TokenContext);
+
   const [answer, setAnswer] = useState({});
 
   const body = {
